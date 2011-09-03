@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+
+{% block main_left %}
+<form action="" method="post"> {% csrf_token %}
+    <input class="input t-input" name="username" type="text" placeholder="username" />
+    <input class="input t-input" name="password" type="password" placeholder="password" />
+    <input class="button" type="submit" />
+</form>
+{% endblock %}

@@ -1,0 +1,65 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+
+    <title>
+    {% block head_title %}
+    {% endblock %}
+    </title>
+
+    <!-- preload font -->
+    <link href='http://fonts.googleapis.com/css?family=Aldrich' rel='stylesheet' type='text/css'>
+
+    <!-- preload ui -->
+    <link media="all" rel="stylesheet" href="/media/css/mx-ui.css" type="text/css" />
+
+    <!-- page base.css -->
+    <link media="all" rel="stylesheet" href="/media/css/base.css" type="text/css" />
+
+    <!-- javascript libs -->
+    <script src="/media/js/jquery.js" type="text/javascript"></script>
+    <script src="/media/js/jquery.tmpl.js" type="text/javascript"></script>
+    <script src="/media/js/jquery.cookie.js" type="text/javascript"></script>
+
+    <!-- page base.js -->
+    <script src="/media/js/base.js" type="text/javascript"></script>
+
+    <!-- widget codeprettify -->
+    <link media="all" rel="stylesheet" href="/media/css/prettify.css" type="text/css" />
+    <script src="/media/js/prettify.js" type="text/javascript"></script>
+
+    <!-- page certain -->
+    {% block head_extra %}
+    {% endblock %}
+
+</head>
+
+<body onload="prettyPrint()">
+
+    <div id="main" class="container">
+
+
+        <div id="main_left_wrap">
+        <div id="main_left">
+        {% block main_left %}
+        {% endblock %}
+        </div>
+        </div>
+
+        <div id="main_right">
+        {% block main_right %}
+        {% endblock %}
+        </div>
+
+        <div class="clearfix"></div>
+
+
+    </div>
+
+
+    <div id="step_monitor">
+        step monitor
+    </div>
+</body>
+</html>

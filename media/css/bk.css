@@ -1,0 +1,29 @@
+div.mx .title {
+    margin-bottom: 10px;
+    text-align: center;
+    font-size: 24px;font-weight: bold; letter-spacing: 2px;
+}
+div.mx .content {
+    margin: 5px 0;
+    padding: 5px;
+    background: #333;
+    color: #eee;
+}
+div.mx .block {
+    border: 1px solid #aaa;
+    -webkit-box-shadow: 0 0 3px #999 inset;
+}
+div.mx .block .item{
+    height: 33px; line-height: 33px;
+    color: #444;
+    border-bottom: 1px solid #aaa;
+    background: #fff;
+    -webkit-transition: all 0.5s ease;
+    font-size: 16px; font-weight: bold; text-align: center; letter-spacing: 1px;
+}
+div.mx .block .item:hover {
+    background: #F7F5DD;
+}
+div.mx .block .item:last-child {
+    border-bottom: 0;
+}

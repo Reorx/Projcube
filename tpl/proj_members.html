@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block head_title %}
+proj
+{% endblock %}
+
+{% block head_extra %}
+<style type="text/css">
+    #proj_members {
+    }
+    #proj_members .item {
+        height: 50px; line-height: 50px;
+        padding-left: 20px;
+        font-size: 25px; font-weight: bold; letter-spacing: 1px;
+        color: #7bc30a;
+    }
+</style>
+{% endblock %}
+
+{% block main_left %}
+
+<div id="proj_members">
+    {% for i in members %}
+        <div class="item">
+            <div class="name">{{ i.username }}</div>
+        </div>
+    {% endfor %}
+</div>
+
+{% endblock %}
+
+{% block main_right %}
+    <div class="block">
+        <div class="title">
+            User
+        </div>
+        <div class="item">
+            {{ request.user.username }}
+        </div>
+        <div class="title">
+            Context
+        </div>
+        <div class="item">
+            projA
+        </div>
+        <div class="title">
+            Projects
+        </div>
+    </div>
+{% endblock %}
