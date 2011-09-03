@@ -1,7 +1,5 @@
 body { margin: 0; }
 a { text-decoration: none; }
-ul { margin: 0; padding: 0; list-style: none; }
-li { margin: 0; padding: 0; list-style: none; }
 input, textarea { }
 input:focus, textarea:focus { color: #333; }
 textarea { resize: none; }
@@ -122,6 +120,21 @@ pre { }
 }
 .bd-1 {
     border-color: #7bc30a;
+}
+
+.scroll::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+    padding: 18px;
+    -webkit-border-radius: 1ex
+}
+
+.scroll::-webkit-scrollbar-thumb {
+    background-color: rgba(053,057,071,0.3);
+    padding: 8px;
+    width: 6px;
+    height: 6px;
+    -webkit-border-radius: 1ex;
 }
 
 /* funtional */

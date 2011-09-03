@@ -9,7 +9,9 @@
     </title>
 
     <!-- preload font -->
+    <!--
     <link href='http://fonts.googleapis.com/css?family=Aldrich' rel='stylesheet' type='text/css'>
+    -->
 
     <!-- preload ui -->
     <link media="all" rel="stylesheet" href="/media/css/mx-ui.css" type="text/css" />
@@ -37,29 +39,66 @@
 
 <body onload="prettyPrint()">
 
-    <div id="main" class="container">
+    <div id="main" class="container sketch">
 
-
-        <div id="main_left_wrap">
-        <div id="main_left">
-        {% block main_left %}
-        {% endblock %}
-        </div>
-        </div>
-
-        <div id="main_right">
-        {% block main_right %}
-        {% endblock %}
+        <div id="main_top" class="sketch">
+            <div id="proj-name" class="sketch font">{{ context.name }}</div>
+            <div id="proj-options" class="sketch">
+                {% block main_top_extra %}
+                {% endblock %}
+            </div>
         </div>
 
         <div class="clearfix"></div>
 
+        <div id="main_left" class="sketch">
+            {% block main_left %}
+            {% endblock %}
+        </div>
+
+        <div id="main_right_top_cover"></div>
+        <div id="main_right" class="scroll sketch">
+            {% block main_right %}
+            {% endblock %}
+        </div>
+
+        <div class="clearfix"></div>
+
+        <div id="main_bottom" class="sketch">
+        </div>
 
     </div>
 
-
-    <div id="step_monitor">
-        step monitor
+    <div id="menu">
+        <div class="title">
+            <span> Menu </span>
+            <div class="switch"></div>
+        </div>
+        <ul>
+        	<li>
+        		<a href="#">open editor</a>
+        	</li>
+        	<li>
+        		<a href="#">change context</a>
+        	</li>
+        	<li>
+        		<a href="#">see projects</a>
+        	</li>
+        	<li>
+        		<a href="#">see notes</a>
+        	</li>
+        	<li>
+        		<a href="#">see messages</a>
+        	</li>
+        	<li>
+        		<a href="#">settings</a>
+        	</li>
+        </ul>
     </div>
+
+    <div id="cubeditor" class="sketch">
+        <textarea class="editor" contenteditable="true"></textarea>
+    </div>
+
 </body>
 </html>

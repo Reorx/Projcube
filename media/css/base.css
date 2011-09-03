@@ -1,74 +1,114 @@
-body {
-    background: url('/media/img/bg1.png');
-    /*-webkit-transition: background-position 1s ease, color 1s ease;*/
-    margin: 0;
+@import url(/media/fonts/Josefin-Sans.css); 
+
+.sketch {
+    border: 0px solid #dadada;
 }
 
 #main {
-    width: 950px;
-    margin-top: 20px;
-    border 1px solid #aaa;
-    -webkit-box-shadow: 0 0 10px #aaa;
-    background: #fafafa;
+    width: 700px;
+    position: relative;
 }
 
-#main_left_wrap {
-    float: left;
-    width: 800px;
-    overflow: hidden;
+#main_top {
+    height: 100px;
 }
-#main_left {
+
+#proj-name, #proj-options {
     float: left;
-    width: 790px;
-    min-height: 700px;
-    border-right: 0px solid #aaa;
-    -webkit-box-shadow: 0 0 8px #888;
+    height: 80px;
+    margin-top: 10px;
+    margin-left: 15px;
+}
+#proj-name {
+    padding-right: 20px;
+}
+
+#main_left, #main_right {
+    float: left;
+    margin-top: 10px;
+    position: relative;
+}
+
+#main_left {
+    width: 350px;
+    min-height: 450px;
+    margin-left: 15px;
 }
 
 #main_right {
-    float: right;
-    overflow: hidden;
-    width: 140px;
-    min-height: 300px;
-    margin-right: 10px;
+    width: 300px;
+    margin-left: 10px;
+    padding-right: 10px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+#main_right_top_cover {
+    position: absolute;
+    top: 110px; right: 22px;
+    width: 300px; height: 15px;
+    z-index: 999;
+    background: -webkit-linear-gradient(top, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0));
 }
 
-#main_right .block {
-    margin-top: 10px;
-    margin-bottom: 30px;
+#main_bottom {
+    height: 50px;
+    margin-top: 15px;
 }
-#main_right .block:hover > .item {
+
+#menu {
+    position: fixed;
+    left: 0; top: 200px;
+    padding-left: 10px;
+}
+
+/* style ? */
+
+#proj-name.font {
+    line-height: 70px;
+    font-size: 50px;
+}
+
+#menu {
+    font-family: 'Josefin Sans', sans-serif;
+    color: #333;
+    font-weight: bold;
+}
+#menu .title {
+    font-size: 25px;
+    position: relative;
+}
+#menu .title .switch {
+    position: absolute;
+    left: 70px; top: 17px;
+    width: 16px; height: 16px;
+    -webkit-border-radius: 8px;
+    background: #ccc;
+    cursor: pointer;
+}
+#menu .title .switch.focus {
+    background: #555;
+}
+#menu ul {
+    list-style-type: lower-roman;
+    padding-left: 35px;
+}
+#menu ul li {
+    display: none;
+    font-size: 18px;
+}
+#menu ul li a{
     color: #333;
 }
-#main_right .block:first-child {
+
+#cubeditor {
+    display: none;
+    position: fixed;
+    left: 0; top: 0;
+    width: 500px; height: 200px;
+    background: #eee;
 }
-#main_right .block .title_wrap {
-    height: 38px;
-    overflow: hidden;
-}
-#main_right .block .title {
-    height: 28px; line-height: 28px;
-    /*
-    border-top: 1px solid #666;
-    border-bottom: 1px solid #666;
-    */
-    margin-top: 5px;
-    font-size: 18px;
-    font-family: 'Aldrich', sans-serif;
-    text-align: center;
-    color: #444;
-    letter-spacing: 1px;
-    text-shadow: 0px 0px 1px #144400;
-}
-#main_right .block .item {
-    height: 30px; line-height: 30px;
-    text-align: center;
-    color: transparent;
-    font-family: 'Aldrich', sans-serif;
-    font-size: 13px;
-    cursor: pointer;
-    -webkit-transition: all 0.3s ease-in-out;
-}
-#main_right .block .item:hover {
-    text-shadow: 0px 0px 1px #7bc30a;
+#cubeditor .editor {
+    position: absolute;
+    left: 15px; right: 15px; top: 15px; bottom: 15px;
+    background: #fafafa;
 }

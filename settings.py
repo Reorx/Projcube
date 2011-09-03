@@ -88,9 +88,9 @@ INSTALLED_APPS = (
     'utils',
     'base',
     'proj',
-    'components.msg'
-    #'components.comment',
-    #'components.noti'
+    'components.msg',
+    'components.comment',
+    'components.noti'
 )
 
 # cache

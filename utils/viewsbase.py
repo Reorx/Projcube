@@ -89,7 +89,7 @@ class get_rsrc:
             user = req.user
 
             if 'POST' == req.method:
-                arg = req._post_data.get(self.arg_name)
+                arg = req.POST.get(self.arg_name)
             else:
                 arg = req.GET.get(self.arg_name)
 

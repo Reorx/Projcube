@@ -37,10 +37,10 @@ class Task(BaseRModel):
     proj = ForeignKey(Proj, related_name='tasks')
     content = CharField(max_length=256)
 
-    is_done = BooleanField(default=False)
+    is_done = IntegerField(default=0)
 
     def __unicode__(self):
-        return content[10:]
+        return self.content[10:]
 
     def stdout(self):
         import datetime
@@ -48,7 +48,8 @@ class Task(BaseRModel):
         data.update(
             time_delta = get_time_delta(data['created_time'],
                 datetime.datetime.now()),
-            proj = self.proj.stdout()
+            status = self.is_done
+            #proj = self.proj.stdout()
         )
         return data
 

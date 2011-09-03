@@ -5,7 +5,7 @@ from utils import hashFN
 
 class BaseRModel(Model):
     nid = CharField(max_length=10, null=True)
-    md5id = CharField(max_length=32, null=True)
+    uid = CharField(max_length=32, null=True)
     created_time = DateTimeField(auto_now_add=True)
     def __unicode__(self):
         return 'base resource model'
@@ -18,21 +18,21 @@ class BaseRModel(Model):
 
     def set_nid(self):
         self.nid = hashFN.CreateNid(self.id)
-    def set_md5id(self):
+    def set_uid(self):
         s = str(time.time()) + self.__class__.__name__ + str(self.id)
-        self.md5id = hashFN.Md5(s)
+        self.uid = hashFN.Md5(s)
 
     def save(self, *args, **kwargs):
         print '%s save' % self.type
         if not self.id:
             print '1st save'
             super(BaseRModel, self).save(*args, **kwargs)
-        if not self.nid or not self.md5id:
+        if not self.nid or not self.uid:
             print '2nd save'
             if not self.nid:
                 self.set_nid()
-            if not self.md5id:
-                self.set_md5id()
+            if not self.uid:
+                self.set_uid()
         super(BaseRModel, self).save()
 
     @classmethod
@@ -65,7 +65,6 @@ class BaseRModel(Model):
         data = {
             'type': self.type,
             'id': self.id,
-            'md5id': self.md5id,
             'created_time': self.created_time
         }
         if hasattr(self, 'name'):

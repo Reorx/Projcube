@@ -2,7 +2,6 @@
 def get_time_delta(timeA, timeB):
     delta = timeB - timeA
     delta = int(delta.total_seconds())
-    print type(delta), delta
     if delta < 60:
         print '%s s' % delta
         return '%s s' % delta

@@ -1,171 +1,110 @@
-
-(function ($) {
-    $.fn.minimenu = function (args) {
-        var initials = {
-            source: '', // url to get menu
-            elements: [], // alternative to former
-            element_event: undefined,
-            display: 0
-        };
-        args = $.extend(initials, args);
-        return this.each(function () {
-            // change display
-            var $this = $(this);
-            var change_display = function (html, display) {
-                $this.html(html).data('id', args.elements[args.display].id);
-            }
-            change_display(args.elements[args.display].name, args.display);
-
-            // create menu
-            var menu = $('<div>').addClass('minimenu-menu'
-            ).css({
-                display: 'none',  // hide menu at first
-                position: 'absolute',
-                left: $this.offset().left,
-                top: $this.offset().top + $this.height(),
-                width: $this.parent().width() - 1
-            });
-
-
-            // fill menu with elements
-            $.each(args.elements, function (k, v) {
-                // create element
-                var element = $('<div>').addClass('minimenu-menu-element'
-                ).html(v.name
-                ).data('id', v.id
-                ).data('seq', k);
-
-                // bind events
-                element.click(function () {
-                    // run event
-                    if (args.element_event) {
-                        args.element_event($(this));
-                    }
-                    // switch with .minimenu
-                    $(this).hide();
-                    menu.children().each(function () {
-                        if ($(this).data('seq') == $this.data('id')) {
-                            $(this).show();
-                        }
-                    });
-
-                    $this.html($(this).html());
-                    change_display($(this).html(), $(this).data('seq'));
-                });
-
-                // hide if same with display
-                if (k == args.display) element.hide();
-
-                // append element to menu
-                menu.append(element)
-            });
-            menu.appendTo('body');
-
-            // click minimenu to show
-            $this.click(function () {
-                menu.is(':visible')?menu.hide():menu.show();
-                return false;
-            })
-            // click any other part of body to hide
-            $('body').click(function (e) {
-                menu.is(':visible')&&menu.hide();
-                return false;
-            });
-        });
+/* global variables */
+var Env = {
+    task_id: null,
+    proj_id: $.cookie('context_proj_id'),
+    filter: {
+        people: 'me',
+        status: 0
     }
-})(jQuery);
+};
 
+/* functions */
+var LoadTasks = function () {
+    var params = {
+        proj_id: Env.proj_id
+    }
+    params = $.extend(params, Env.filter);
+    var ajax = new_ajax('GET');
+    ajax.url = '/tasks/ajax?' + $.param(params);
+    ajax.send(function (json) {
+        var task_container = $('#tasks').empty();
+        var task_tmpl = '<li class="task_item" style="display: none;">${content}</li>';
+        $.each(json, function (i, obj) {
+            var task = $.tmpl(task_tmpl, obj);
+            task.data('id', obj.id);
+            task_container.append(task);
+            task.delay(i*50).fadeIn(200);
+        });
+    });
+}
+var ShowTaskDetail = function (id) {
+    var ajax = new_ajax('GET');
+    ajax.url = '/tasks/ajax/show?task_id=' + id;
+    ajax.send(function (json) {
+        $('#task_info').find('.creator').html(json.creator.username);
+        $('#task_info').find('.time').html(json.created_time);
+        $('#task_comments').empty();
+        comment_tmpl = '<div class="item">' +
+                            '<div class="content"></div>' +
+                            '<div class="creator">' +
+                                '<a href="/user/${creator.id}">${creator.username}</a>' +
+                            '</div>' +
+                        '</div>'
+        $.each(json.comments, function (i, obj) {
+            var comment = $.tmpl(comment_tmpl, obj);
+            comment.find('.content').html(obj.content);
+            $('#task_comments').append(comment);
+        });
+
+        if (!$('#main_right').is(':visible')) {
+            $('#main_right').fadeIn(300);
+        }
+
+        // after all change Env.task_id
+        Env.task_id = id
+    });
+}
+
+/* on ready */
 $(function () {
+    // events
+    $('.task_item').live('click', function () {
+        if ($(this).hasClass('focus')) {
+            $(this).removeClass('focus');
+            $('#main_right').fadeOut(300);
+        } else {
+            $('.task_item').removeClass('focus');
+            $(this).addClass('focus');
 
-
-    // 
-    $('#minimenu-sendtype').minimenu({
-        elements: [
-            {name: 'task', id: 0},
-            {name: 'note', id: 1},
-            {name: 'msg', id: 2}
-        ]
+            ShowTaskDetail($(this).data('id'));
+        }
     });
 
-    // get minimenu-proj elements
-    var GetProjs = function () {
-        var ajax = new_ajax('GET');
-        ajax.url = '/projs/ajax'
-        ajax.send(function (json) {
-            var elmts = []
-            $.each(json, function (i, obj) {
-                elmts[i] = {name: obj.name, id: obj.id};
-            });
-            $('#minimenu-proj').minimenu({
-                elements: elmts
-            });
-        })
-    }
-    GetProjs();
-
-    // task input submit
-    $('#inplat-textarea').keydown(function (e) {
+    $('#task_comment_editor').keydown(function (e) {
+        var $this = $(this);
         // Ctrl-Enter pressed
         if (e.ctrlKey && e.keyCode == 13) {
-            var options = {
-                sendtype: $('#minimenu-sendtype').data('id'),
-                proj: $('#minimenu-proj').data('id')
-            }
-
             var ajax = new_ajax('POST');
-            switch (options.sendtype) {
-                case 0: // task
-                    ajax.url = '/tasks/ajax/create';
-                    ajax.data = {
-                        content: $(this).val(),
-                        proj_id: $('#minimenu-proj').data('id')
-                    }
-                    ajax.send(function (resp) {
-                        popNoti(resp);
-                        $('#task_input').val('').blur();
-                    });
-                    break
-                case 1: // note
-                    break
-                case 2: // msg
-                    break
-                default:
-                    break
+            ajax.url = '/tasks/ajax/commenton';
+            ajax.data = {
+                task_id: Env.task_id,
+                content: $(this).val()
             }
-        }
-    });
-
-    //
-    var ReloadColumn = function (json) {
-        var tasks_container = $('#readboard-column-left').find('.items');
-        tasks_container.empty();
-        var task_tmpl = '<div class="item">' +
-                            '<div class="info">' +
-                                '<span>#${id}</span>' +
-                                '<span>${time_delta}</span>' +
-                            '</div>' +
-                            '<div class="content">${content}</div>' +
-                            '<div class="clearfix"></div>' +
-                        '</div>';
-        $.each(json, function (i, obj) {
-            $.tmpl(task_tmpl, obj).appendTo(tasks_container);
-        });
-    };
-
-    $('#minimenu-filter').minimenu({
-        elements: [
-            {name: 'all', id: 0},
-            {name: 'my', id: 1},
-            {name: 'others', id: 2}
-        ],
-        element_event: function (elmt) {
-            var ajax = new_ajax('GET');
-            ajax.url = '/tasks/ajax?proj_id=' + $.cookie('context_proj_id') +
-                       '&mode=' + elmt.data('id');
             ajax.send(function (json) {
-                ReloadColumn(json);
+                $this.val('').blur();
+                popNoti(json.msg);
+                ShowTaskDetail(Env.task_id);
             });
         }
     });
+
+    $('#proj-options .people').find('a').click(function () {
+        Env.filter.people = $(this).attr('data');
+    });
+    $('#proj-options .status').find('a').click(function () {
+        Env.filter.status = $(this).attr('data');
+    });
+    $('#proj-options').find('a').click(function () {
+        if (!$(this).hasClass('active')) {
+            $(this).parent().children().removeClass('active');
+            $(this).addClass('active');
+            LoadTasks();
+        }
+        return false;
+    });
+
+
+    // running
+    LoadTasks();
 
 });

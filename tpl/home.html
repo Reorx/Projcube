@@ -12,120 +12,34 @@ Proj
 
 {% endblock %}
 
+{% block main_top_extra %}
+    <div class="sketch box people">
+        <a href="#" class="active" data="all">all</a>
+        <a href="#" class="" data="me">me</a>
+        <a href="#" class="" data="others">others</a>
+    </div>
+    <div class="sketch box status">
+        <a href="#" class="active" data="0">undone</a>
+        <a href="#" class="" data="1">done</a>
+    </div>
+{% endblock %}
+
 {% block main_left %}
-
-    <div id="inplat">
-        <ul class="header bg-1">
-            <li>
-                <a href="#" id="minimenu-sendtype" class="minimenu"></a>
-            </li>
-            <li>
-                <a href="#" id="minimenu-proj" class="minimenu"></a>
-            </li>
-        </ul>
-
-        <textarea id="inplat-textarea" class="bd-1" name="" rows="" cols=""></textarea>
-    </div>
-
-    <div id="readboard">
-        <div id="readboard-column-left" class="column">
-            <div class="header bg-1">
-                Tasks
-                <div class="minimenu-wrapper">
-                    <a id="minimenu-filter" class="minimenu">all</a>
-                </div>
-            </div>
-            <div class="items">
-            {% for i in tasks %}
-            <div class="item">
-                <div class="info">
-                    <span>#{{ i.id }}</span>
-                    <span>{{ i.created_time|compare_by_now }}</span>
-                </div>
-                <div class="content">
-                    {{ i.content }}
-                </div>
-                <div class="clearfix"></div>
-            </div>
-            {% endfor %}
-            </div>
-
-            <div class="gap"></div>
-        </div>
-
-        <div id="readboard-column-right" class="column">
-            <div class="header bg-1">
-                Notes
-            </div>
-        </div>
-
-        <div class="clearfix"></div>
-    </div>
-
+    <ul id="tasks">
+    </ul>
 {% endblock %}
 
 {% block main_right %}
-    <div class="block">
-        <div class="title_wrap">
-        <div class="title">
-            {{ context.name }}
-        </div>
-        </div>
-        <div class="item" id="userinfo-context" >
-        </div>
+<div id="task_info">
+    <div class="box">
+        <span class="title">Creator</span><span class="creator"></span>
     </div>
-    <div class="block">
-        <div class="title_wrap">
-        <div class="title">
-            {{ request.user.username }}
-        </div>
-        </div>
-        <div class="item">
-            messages
-        </div>
-        <div class="item">
-            projects
-        </div>
+    <div class="box">
+    	<span class="title">Time</span><span class="time"></span>
     </div>
-    <div class="block">
-        <div class="title">
-            Tasks
-        </div>
-        <div class="item">
-            undone
-        </div>
-        <div class="item">
-            done
-        </div>
-    </div>
-    <div class="block">
-        <div class="title">
-            Daysums
-        </div>
-        <div class="item">
-            weekly
-        </div>
-        <div class="item">
-            periodly
-        </div>
-    </div>
-    <div class="block">
-        <div class="title">
-            Messages
-        </div>
-        <div class="item">
-            received
-        </div>
-        <div class="item">
-            sent
-        </div>
-    </div>
-    <div class="block">
-        <div class="title">
-            Settings
-        </div>
-        <div class="item">
-            default_context
-        </div>
-    </div>
+</div>
+<div id="task_comments">
+</div>
+<textarea class="sketch" id="task_comment_editor">
+</textarea>
 {% endblock %}

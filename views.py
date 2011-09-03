@@ -1,6 +1,7 @@
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
+from django.db.models import Q
 import config
 
 from utils.viewsbase import render_tpl, render_api, ApiBaseError,\
@@ -9,6 +10,8 @@ from utils.viewsbase import render_tpl, render_api, ApiBaseError,\
 from proj.models import Proj, ProjMembership,\
         Task, Daysum
 from proj import forms
+
+from components import comment as _comment_
 
 COOKIE_CONTEXT_KEY = 'context_proj_id'
 
@@ -87,27 +90,35 @@ def v_tasks(req, tpl='.html'):
     cdic = {}
     return render_tpl(req, tpl, cdic)
 
-@check_params(['proj_id', 'mode'])
 @get_rsrc('proj.Proj', 'proj_id')
 def v_tasks_ajax(req):
-    try:
-        mode = int(req.GET['mode'])
-    except:
-        raise ApiBaseError(400, 'Mode Expect to be number')
+    opts = {
+        'people': req.GET.get('people') or 'me',
+        'status': int(req.GET.get('status')) or 0
+    }
 
     user = req.user
-    target = req._target
-    if 0 == mode:
-        qs = target.tasks.all();
-    elif 1 == mode:
-        qs = target.tasks.filter(creator=user)
-    elif 2 == mode:
-        qs = target.tasks.exclude(creator=user)
-    else:
-        raise ApiBaseError(400, 'Params Not Validate')
+    proj = req._target
 
+    if 'me' == opts['people']:
+        Q0 = Q(creator = user)
+    elif 'others' == opts['people']:
+        Q0 = ~Q(creator = user)
+    else:
+        Q0 = Q()
+    Q1 = Q(is_done = opts['status'])
+
+    qs = proj.tasks.filter(Q0, Q1)
     data = [i.stdout() for i in qs.order_by('-created_time')]
 
+    return render_api(data)
+
+@login_required
+@get_rsrc('proj.Task', 'task_id')
+def v_tasks_ajax_show(req):
+    task = req._target
+    data = task.stdout()
+    data['comments'] = _comment_.get_comments(task)
     return render_api(data)
 
 @login_required
@@ -118,6 +129,13 @@ def v_tasks_ajax_create(req):
         raise ApiBaseError(400, 'Bad Data')
     task = form.save()
     return render_api(task.stdout())
+
+@login_required
+@get_rsrc('proj.Task', 'task_id')
+def v_tasks_ajax_commenton(req):
+    print req.POST
+    _comment_.create_comment(req._target, req.user, req.POST['content'])
+    return render_api({'msg': 'OK'})
 
 def v_tasks_undone(req, tpl='.html'):
     cdic = {}

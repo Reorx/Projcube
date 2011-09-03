@@ -17,7 +17,9 @@ urlpatterns = patterns('',
     #(r'^tasks/done$', views.v_tasks_done),
 
     (r'^tasks/ajax$', views.v_tasks_ajax),
+    (r'^tasks/ajax/show$', views.v_tasks_ajax_show),
     (r'^tasks/ajax/create$', views.v_tasks_ajax_create),
+    (r'^tasks/ajax/commenton$', views.v_tasks_ajax_commenton),
 
     (r'^daysums$', views.v_daysums),
     #(r'^daysums/weekly$', views.v_daysums_weekly),
