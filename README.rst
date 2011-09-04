@@ -5,7 +5,7 @@ TODO
 Task
     * edit, delete & done, undone
     * filter: time
-    * 
+    * extend filter people, choose certain member
 
 Proj
     * list manage: update, delete
