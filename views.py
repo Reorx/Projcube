@@ -17,32 +17,37 @@ COOKIE_CONTEXT_KEY = 'context_proj_id'
 
 @login_required
 def v_home(req, tpl='home.html'):
-    cdic = {
-        'context': None,
-        'tasks': None,
-        'notes': None
-    }
     user = req.user
-    # get context
-    try:
-        cdic['context'] = user.projs.get(id=req.COOKIES['context_proj_id'])
-    except:
+
+    if not user.in_projs.all():
+        tpl = 'no_context.html'
+        return render_tpl(req, tpl)
+    else:
+        cdic = {
+            'context': None,
+            'tasks': None,
+            'notes': None
+        }
+        # get context
         try:
-            cdic['context'] = user.projs.all()[0]
+            cdic['context'] = user.in_projs.get(id=req.COOKIES['context_proj_id'])
         except:
-            pass
+            try:
+                cdic['context'] = user.in_projs.all()[0]
+            except:
+                pass
 
-    # get tasks
-    if cdic['context']:
-        cdic['tasks'] = cdic['context'].tasks.all().order_by('-created_time')
+        # get tasks
+        if cdic['context']:
+            cdic['tasks'] = cdic['context'].tasks.all().order_by('-created_time')
 
-    # get notes
+        # get notes
 
-    resp = render_tpl(req, tpl, cdic)
-    if cdic['context']:
-        resp.set_cookie(COOKIE_CONTEXT_KEY, cdic['context'].id)
+        resp = render_tpl(req, tpl, cdic)
+        if cdic['context']:
+            resp.set_cookie(COOKIE_CONTEXT_KEY, cdic['context'].id)
 
-    return resp
+        return resp
 
 def v_projs_create(req, tpl='proj_create.html'):
     cdic = {}
@@ -82,7 +87,7 @@ def v_projs_ajax(req):
             raise ApiBaseError(400, 'param error')
     user = req.user
 
-    data = [i.stdout() for i in user.projs.all()]
+    data = [i.stdout() for i in user.in_projs.all()]
 
     return render_api(data)
 
@@ -126,6 +131,7 @@ def v_tasks_ajax_create(req):
     print req.POST
     form = forms.TaskForm(user=req.user, data=req.POST.copy())
     if not form.is_valid():
+        print form.errors
         raise ApiBaseError(400, 'Bad Data')
     task = form.save()
     return render_api(task.stdout())

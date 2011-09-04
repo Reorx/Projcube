@@ -74,24 +74,34 @@
             <span> Menu </span>
             <div class="switch"></div>
         </div>
-        <ul>
+        <ul class="level0">
+            {% if request.user.is_authenticated %}
+                <li>
+                    <a href="#">open editor</a>
+                </li>
+                <li>
+                    <a href="#">change context</a>
+                </li>
+                <li>
+                    <a href="#">see projects</a>
+                </li>
+                <li>
+                    <a href="#">see notes</a>
+                </li>
+                <li>
+                    <a href="#">see messages</a>
+                </li>
+            {% endif %}
         	<li>
-        		<a href="#">open editor</a>
-        	</li>
-        	<li>
-        		<a href="#">change context</a>
-        	</li>
-        	<li>
-        		<a href="#">see projects</a>
-        	</li>
-        	<li>
-        		<a href="#">see notes</a>
-        	</li>
-        	<li>
-        		<a href="#">see messages</a>
-        	</li>
-        	<li>
-        		<a href="#">settings</a>
+        		<a href="#">accounts</a>
+                <ul class="level1">
+                	<li> <a href="/accounts/signup">signup</a> </li>
+                    {% if request.user.is_authenticated %}
+                	    <li> <a href="/accounts/logout">logout</a> </li>
+                    {% else %}
+                	    <li> <a href="/accounts/login">login</a> </li>
+                    {% endif %}
+                </ul>
         	</li>
         </ul>
     </div>

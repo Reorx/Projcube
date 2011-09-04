@@ -52,7 +52,7 @@ class TaskForm(forms.ModelForm):
     def clean_proj_id(self):
         proj_id = self.cleaned_data['proj_id']
         try:
-            self.proj = self.user.projs.get(id=proj_id)
+            self.proj = Proj.objects.get(id=proj_id)
             if not self.proj.judge_membership(self.user):
                 raise forms.ValidationError('not project member')
         except:

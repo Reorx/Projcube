@@ -158,7 +158,7 @@ var ShowMenu = function () {
     $('#menu').find('.switch').addClass('focus');
     var menu_items = $('#menu').find('li');
     $.each(menu_items, function (i, d) {
-        $(d).stop(true, true).delay(i*100).fadeIn(300);
+        $(d).stop(true, true).delay(i*80).fadeIn(200);
     });
 }
 var HideMenu = function () {

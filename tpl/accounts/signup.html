@@ -1,11 +1,12 @@
 {% extends 'base.html' %}
 
-{% block main_container %}
+{% block main_left %}
 <form action="" method="post">
-    <input name="username" type="text" placeholder="username" />
-    <input name="email" type="text" placeholder="email" />
-    <input name="password1" type="password" placeholder="password" />
-    <input name="password2" type="password" placeholder="password" />
+    <input class="input" name="username" type="text" placeholder="username" />
+    <input class="input" name="email" type="text" placeholder="email" />
+    <input class="input" name="password1" type="password" placeholder="password" />
+    <input class="input" name="password2" type="password" placeholder="password" />
+    <div class="clearfix"></div>
     <input class="button" type="submit" />
 </form>
 {% endblock %}

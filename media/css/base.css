@@ -88,13 +88,18 @@
 #menu .title .switch.focus {
     background: #555;
 }
-#menu ul {
-    list-style-type: lower-roman;
+
+#menu ul.level0 {
+    list-style-type: upper-roman;
     padding-left: 35px;
 }
-#menu ul li {
+#menu ul.level0 li {
     display: none;
     font-size: 18px;
+}
+#menu ul.level1 {
+    list-style-type: lower-roman;
+    padding-left: 25px;
 }
 #menu ul li a{
     color: #333;

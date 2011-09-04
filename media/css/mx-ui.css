@@ -36,6 +36,7 @@ pre { }
     text-shadow: 0 1px #F0F0F0;
 
     letter-spacing: 1px;
+    text-align: center;
 }
 .button:focus {
     outline: medium none;

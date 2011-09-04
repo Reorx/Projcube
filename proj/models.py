@@ -7,10 +7,10 @@ from utils.timer import get_time_delta
 from base.models import BaseRModel
 
 class Proj(BaseRModel):
-    creator = ForeignKey(User)
+    creator = ForeignKey(User, related_name='own_projs')
     name = CharField(max_length=64)
     description = CharField(max_length=256)
-    members = ManyToManyField(User, related_name='projs', through='ProjMembership')
+    members = ManyToManyField(User, related_name='in_projs', through='ProjMembership')
 
     def __unicode__(self):
         return self.name
