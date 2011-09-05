@@ -11,3 +11,14 @@ def get_time_delta(timeA, timeB):
         return '%s h' % (delta/(60 * 60))
     else:
         return '%s day' % (delta/(60 * 60 * 24))
+
+TIME_TMPL = '%(m)s-%(d)s %(H)s:%(M)s %(dm)s.'
+def readable_time(dt):
+    c = dict(
+        m = dt.month,
+        d = dt.day,
+        H = ((dt.hour-12)>0 and [dt.hour-12] or [dt.hour])[0],
+        M = dt.strftime('%M'),
+        dm = ((dt.hour-12)>0 and ['pm'] or ['am'])[0]
+    )
+    return TIME_TMPL % c

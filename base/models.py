@@ -1,7 +1,7 @@
 from django.db.models.base import Model
 from django.db.models import *
 
-from utils import hashFN
+from utils import hashFN, timer
 
 class BaseRModel(Model):
     nid = CharField(max_length=10, null=True)
@@ -65,7 +65,8 @@ class BaseRModel(Model):
         data = {
             'type': self.type,
             'id': self.id,
-            'created_time': self.created_time
+            'created_time': self.created_time, # datetime
+            'created_time_simple': timer.readable_time(self.created_time)
         }
         if hasattr(self, 'name'):
             data['name'] = self.name

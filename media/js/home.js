@@ -36,8 +36,9 @@ var ShowTaskDetail = function (id) {
         $('#task_comments').empty();
         comment_tmpl = '<div class="item">' +
                             '<div class="content"></div>' +
-                            '<div class="creator">' +
+                            '<div class="info">' +
                                 '<a href="/user/${creator.id}">${creator.username}</a>' +
+                                '<span>${created_time_simple}</span>' +
                             '</div>' +
                         '</div>'
         $.each(json.comments, function (i, obj) {

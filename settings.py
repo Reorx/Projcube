@@ -104,4 +104,5 @@ SESSION_COOKIE_DOMAIN = None
 #SESSION_COOKIE_DOMAIN = '.nmadmin.com'
 
 # accounts
+LOGIN_URL = '/accounts/login'
 LOGIN_REDIRECT_URL = '/'
