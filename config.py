@@ -1,1 +1,1 @@
-LOG_ROOT = '/home/reorx'
+LOG_ROOT = '/home/sa/log'
