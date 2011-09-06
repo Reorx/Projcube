@@ -11,7 +11,7 @@ if project_path not in sys.path:
     sys.path.append(root_path)
 
 # settings
-os.environ['DJANGO_SETTINGS_MODULE'] = 'settings'
+os.environ['DJANGO_SETTINGS_MODULE'] = 'projcube.settings'
 
 # wsgi
 import django.core.handlers.wsgi
