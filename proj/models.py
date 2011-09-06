@@ -2,7 +2,7 @@ from django.db.models.base import Model
 from django.db.models import *
 from django.contrib.auth.models import User
 
-from utils.timer import get_time_delta
+from utils.timer import datetime_timedelta
 
 from base.models import BaseRModel
 
@@ -46,7 +46,7 @@ class Task(BaseRModel):
         import datetime
         data = super(Task, self).stdout(['content'])
         data.update(
-            time_delta = get_time_delta(data['created_time'],
+            time_delta = datetime_timedelta(data['created_time'],
                 datetime.datetime.now()),
             status = self.is_done
             #proj = self.proj.stdout()
