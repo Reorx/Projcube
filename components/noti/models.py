@@ -1,6 +1,5 @@
 from django.db.models.base import Model
 from django.db.models import *
-from django.dispatch import Signal
 
 from base.models import BaseRModel
 
@@ -23,3 +22,4 @@ class Noti(BaseRModel):
     def stdout(self):
         data = super(Noti, self).stdout(['content'])
         return data
+
