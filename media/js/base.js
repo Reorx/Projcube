@@ -205,7 +205,7 @@ $(function () {
             ShowMenu();
         }
     });
-    $('#menu li').eq(0).find('a').click(function () {
+    $('#menu').find('a.opener-editor').click(function () {
         HideMenu();
         ShowCubeditor();
         return false;
