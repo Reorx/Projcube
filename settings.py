@@ -1,6 +1,6 @@
 # Django settings for nmadmin project.
 import os
-ROOT_PATH = '/home/sa/projcube'
+from config import ROOT_PATH
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG

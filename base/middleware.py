@@ -8,7 +8,7 @@ def StoreDebugPage(req, resp):
     page_name = ''.join(str(time.time()).split('.')) + \
                 '-' + \
                 '-'.join(str(req.get_full_path()).split('/'))
-    page_path = os.path.join(config.LOG_ROOT,
+    page_path = os.path.join(config.LOG_DIR,
             '%s.html' % page_name)
     page = open(page_path, 'w')
     page.write(resp.content)

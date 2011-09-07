@@ -1,7 +1,14 @@
+import sys
+import time
+import datetime
 
-def get_time_delta(timeA, timeB):
-    delta = timeB - timeA
-    delta = int(delta.total_seconds())
+def datetime_timedelta(dtA, dtB):
+    if sys.version_info.minor < 7:
+        t = lambda x: time.mktime(x.timetuple())
+        delta = int(t(dtB)-t(dtA))
+    else:
+        delta = dtB - dtA
+        delta = int(delta.total_seconds())
     if delta < 60:
         print '%s s' % delta
         return '%s s' % delta
