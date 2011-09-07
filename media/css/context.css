@@ -1,0 +1,10 @@
+#main_left .clearfix {
+    height: 20px;
+}
+
+#main_left .box {
+    margin-bottom: 20px;
+}
+#main_left .box .title {
+    margin-bottom: 10px;
+}

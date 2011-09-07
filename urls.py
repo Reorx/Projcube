@@ -8,15 +8,18 @@ urlpatterns = patterns('',
     (r'^accounts/logout$', 'accounts.logout'),
     (r'^accounts/signup$', 'accounts.signup'),
     #(r'^accounts/settings$', views.v_accounts_settings),
+
+    (r'^context$', views.v_context),
 )
 
 urlpatterns += patterns('',
-    #(r'^projs$', views.v_projs),
+    (r'^projs$', views.v_projs),
     (r'^projs/create$', views.v_projs_create),
     (r'^projs/(?P<id>\d+)/switch$', views.v_projs_switch),
     (r'^projs/(?P<id>\d+)/members$', views.v_projs_members),
     #(r'^projs/(?P<c>\w+)/settings$', views.v_projs_settings),
     (r'^projs/ajax$', views.v_projs_ajax),
+    (r'^projs/ajax/show$', views.v_projs_ajax_show),
 )
 
 urlpatterns += patterns('',

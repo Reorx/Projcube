@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+
+{% load my_filters %}
+
+{% block head_title %}
+Proj
+{% endblock %}
+
+{% block head_extra %}
+    <link media="all" rel="stylesheet" href="/media/css/projs.css" type="text/css" />
+    <script src="/media/js/projs.js" type="text/javascript"></script>
+{% endblock %}
+
+{% block main_top_extra %}
+{% endblock %}
+
+{% block main_left %}
+    <div class="box">
+        <div class="title">In Projs</div>
+        {% for i in in_projs %}
+            <ul class="item">
+                <li>
+                    <a href="#"> {{ i.name}} </a>
+                </li>
+            </ul>
+        {% endfor %}
+    </div>
+
+    <div class="box">
+        <div class="title">Own Projs</div>
+        {% for i in own_projs %}
+            <ul class="item">
+                <li>
+                    <a href="#"> {{ i.name}} </a>
+                </li>
+            </ul>
+        {% endfor %}
+    </div>
+
+    <div class="box">
+        <div class="title">Pending Proj</div>
+        {% for i in pending_projs %}
+            <ul class="item">
+                <li>
+                    <a href="#"> {{ i.name}} </a>
+                </li>
+            </ul>
+        {% endfor %}
+    </div>
+
+{% endblock %}
+
+{% block main_right %}
+{% endblock %}
+

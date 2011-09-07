@@ -9,6 +9,13 @@ var Env = {
 };
 
 /* functions */
+var LoadContext = function () {
+    var ajax = new_ajax('GET');
+    ajax.url = '/projs/ajax/show?proj_id=' + Env.proj_id;
+    ajax.send(function (json) {
+        $('#proj-name').hide().html(json.name).fadeIn(500);
+    });
+}
 var LoadTasks = function () {
     var params = {
         proj_id: Env.proj_id
@@ -106,6 +113,7 @@ $(function () {
 
 
     // running
+    LoadContext();
     LoadTasks();
 
 });

@@ -1,0 +1,29 @@
+.box {
+    margin-bottom: 20px;
+}
+.box .title {
+}
+.box ul.item {
+}
+.box ul.item li {
+    margin-top: 5px;
+}
+
+/* style */
+.box {
+}
+.box .title {
+}
+.box ul.item {
+    list-style-type: circle;
+}
+.box ul.item li:hover {
+    list-style-type: disc;
+}
+.box ul.item li a {
+    color: #333;
+    font-size: 15px;
+}
+.box ul.item li a:hover {
+    text-shadow: 1px 1px 1px #3ecfff;
+}

@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% load my_filters %}
+
+{% block head_title %}
+Proj
+{% endblock %}
+
+{% block head_extra %}
+    <link media="all" rel="stylesheet" href="/media/css/context.css" type="text/css" />
+    <script src="/media/js/context.js" type="text/javascript"></script>
+{% endblock %}
+
+{% block main_top_extra %}
+{% endblock %}
+
+{% block main_left %}
+
+<div class="box">
+    <div class="title">Change Context</div>
+    {% for i in in_projs %}
+        <a class="button" value="{{ i.id }}">{{ i.name }}</a>
+    {% endfor %}
+</div>
+
+<div class="box">
+    <div class="title">OR</div>
+    <a href="/projs/create" class="button">
+        Create A Proj
+    </a>
+    <div class="clearfix"></div>
+
+    <a href="/projs/join" class="button">
+        Join A Proj
+    </a>
+    <div class="clearfix"></div>
+</div>
+
+{% endblock %}
+
+{% block main_right %}
+{% endblock %}
+

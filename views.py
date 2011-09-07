@@ -15,39 +15,45 @@ from components import comment as _comment_
 
 COOKIE_CONTEXT_KEY = 'context_proj_id'
 
+def change_context(resp, context):
+    resp.set_cookie(COOKIE_CONTEXT_KEY, context.id,
+            max_age = 60*60*24*7 )
+
 @login_required
 def v_home(req, tpl='home.html'):
     user = req.user
 
-    if not user.in_projs.all():
-        tpl = 'no_context.html'
-        return render_tpl(req, tpl)
+    context_id = req.COOKIES.get('context_proj_id')
+    if context_id:
+        context_id = int(context_id)
+        try:
+            context = user.in_projs.get(id=context_id)
+        except:
+            context = None
+        if context:
+            resp = render_tpl(req, tpl)
+            change_context(resp, context)
+            return resp
+
+    return HttpResponseRedirect('/context')
+
+def v_context(req, tpl='context.html'):
+    user = req.user
+    if 'POST' == req.method:
+        pass
     else:
         cdic = {
-            'context': None,
-            'tasks': None,
-            'notes': None
+            'in_projs': user.in_projs.all()
         }
-        # get context
-        try:
-            cdic['context'] = user.in_projs.get(id=req.COOKIES['context_proj_id'])
-        except:
-            try:
-                cdic['context'] = user.in_projs.all()[0]
-            except:
-                pass
+        return render_tpl(req, tpl, cdic)
 
-        # get tasks
-        if cdic['context']:
-            cdic['tasks'] = cdic['context'].tasks.all().order_by('-created_time')
-
-        # get notes
-
-        resp = render_tpl(req, tpl, cdic)
-        if cdic['context']:
-            resp.set_cookie(COOKIE_CONTEXT_KEY, cdic['context'].id)
-
-        return resp
+def v_projs(req, tpl='projs.html'):
+    user = req.user
+    cdic = {
+        'in_projs': user.in_projs.all(),
+        'own_projs': user.own_projs.all()
+    }
+    return render_tpl(req, tpl, cdic)
 
 def v_projs_create(req, tpl='proj_create.html'):
     cdic = {}
@@ -90,6 +96,10 @@ def v_projs_ajax(req):
     data = [i.stdout() for i in user.in_projs.all()]
 
     return render_api(data)
+
+@get_rsrc('proj.Proj', 'proj_id')
+def v_projs_ajax_show(req):
+    return render_api(req._target.stdout())
 
 def v_tasks(req, tpl='.html'):
     cdic = {}
