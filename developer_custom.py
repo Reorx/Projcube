@@ -1,7 +1,7 @@
 #coding=utf8
 DATABASES = {
     'default': {
-        'ENGINE': 'mysql', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
+        'ENGINE': 'django.db.backends.mysql', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
         'NAME': 'projcube',
         #'NAME': os.path.join(ROOT, '../MEDIA/testDB.sqlite'),
         'USER': 'root',                      # Not used with sqlite3.
