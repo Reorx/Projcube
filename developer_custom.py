@@ -14,3 +14,6 @@ DATABASES = {
         #'PORT': '3306',                      # Set to empty string for default. Not used with sqlite3.
     }
 }
+
+ROOT_PATH = '/home/sa/www/projcube'
+LOG_DIR = '/home/sa/log'

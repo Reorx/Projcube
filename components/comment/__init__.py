@@ -1,4 +1,4 @@
-from components.noti import noti_signal
+from components.noti.__init__ import noti_signal
 from models import Comment
 
 def get_comments(master):

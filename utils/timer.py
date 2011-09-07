@@ -3,7 +3,7 @@ import time
 import datetime
 
 def datetime_timedelta(dtA, dtB):
-    if sys.version_info.minor < 7:
+    if sys.version_info[1] < 7:
         t = lambda x: time.mktime(x.timetuple())
         delta = int(t(dtB)-t(dtA))
     else:
