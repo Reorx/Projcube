@@ -32,7 +32,9 @@
 			bt_no: 'jqDialog_no',
 			bt_ok: 'jqDialog_ok',
 			bt_ancel: 'jqDialog_ok',
-			input: 'jqDialog_input'
+			input: 'jqDialog_input',
+
+            overlay: 'jqDialog_overlay'
 		},
 		
 		//________confirm dialog
@@ -66,7 +68,7 @@
 
 			t.create(
 				$("<div>").
-					append(message)
+					append($('<span>').html(message))
 					.append( $("<div>").append( t.parts.input.val(content) ) )
 			);
 			
@@ -76,18 +78,29 @@
 
 			t.parts.bt_ok.show();
 			t.parts.bt_cancel.show(); 
+
+            var event_ok = function () {
+				t.close();
+				if(callback_ok) callback_ok( t.parts.input.val() );
+            }
+            var event_cancel = function () {
+				t.close();
+				if(callback_cancel) callback_cancel();
+            }
 			
-			t.parts.input.focus();
+			t.parts.input.keydown(function (e) {
+                if (e.keyCode == 13) {
+                    event_ok();
+                }
+            }).focus();
 			
 			// just redo t everytime in case a new callback is presented
 			t.parts.bt_ok.unbind().click( function() {
-				t.close();
-				if(callback_ok) callback_ok( t.parts.input.val() );
+                event_ok();
 			});
 
 			t.parts.bt_cancel.unbind().click( function() {
-				t.close();
-				if(callback_cancel) callback_cancel();
+                event_cancel();
 			});
 		},
 		
@@ -141,6 +154,8 @@
 			t.maintainPosition( t.parts.div_box );
 			
 			clearTimeout(t.close_timer);
+
+            t.parts.overlay.show();
 			t.parts.div_content.html(content);
 			t.parts.div_options.show();
 			t.parts.div_box.fadeIn('fast');
@@ -149,16 +164,20 @@
 		close: function() {
 			var t = this;
 			t.parts.div_box.fadeOut('fast');
-			t.clearPosition();
+			//t.clearPosition();
+            t.parts.overlay.hide();
 		},
 
 		//________position control
+        /*
 		clearPosition: function() {
 			$(window).unbind('scroll.jqDialog');
 		},
+        */
 		makeCenter: function(object) {
 			object.css({
-				top: ( (($(window).height() / 2) - ( object.height() / 2 ) )) + ($(document).scrollTop()) + 'px',
+				//top: ( (($(window).height() / 2) - ( object.height() / 2 ) )) + ($(document).scrollTop()) + 'px',
+				top:  ($(window).height() / 3) + 'px',
 				left: ( (($(window).width() / 2) - ( object.width() / 2 ) )) + ($(document).scrollLeft()) + 'px'
 			});
 		},
@@ -167,9 +186,11 @@
 
 			t.makeCenter(object);
 			
+            /* use css:fixed instead
 			$(window).bind('scroll.jqDialog', function() {
 				t.makeCenter(object);
 			} );
+            */
 		},
 
 		//________
@@ -183,6 +204,7 @@
 			}
 			
 			$('body').append( t.parts.div_box );
+            t.parts.div_box.after(t.parts.overlay);
 		},
 		init: function() {
 			var t = this;
@@ -199,7 +221,7 @@
 			t.parts.bt_ok = $("<button>").attr({ id: t.ids.bt_ok }).append( t.labels.ok );
 			t.parts.bt_cancel = $("<button>").attr({ id: t.ids.bt_cancel }).append( t.labels.cancel );
 
-			t.parts.input = $("<input>").attr({ id: t.ids.input });
+			t.parts.input = $("<input>").attr({ id: t.ids.input, class: 'input' });
 			t.parts.bt_close = $("<button>").attr({ id: t.ids.bt_close })
 										   .append( t.labels.x ).click(
 												function() {
@@ -216,6 +238,10 @@
 										   .append(t.parts.bt_ok)
 										   .append(t.parts.bt_cancel)
 					);
+            t.parts.overlay = $('<div>').attr({ id: t.ids.overlay }
+                              ).click(function () {
+                                  t.close();
+                              });
 
 			// add to body
 			t.parts.div_box.hide();

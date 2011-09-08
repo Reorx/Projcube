@@ -31,8 +31,15 @@ var LoadTasks = function () {
         var task_container = $('#tasks').empty();
         var task_tmpl = '<li class="task_item" style="display: none;">${content}</li>';
         $.each(json, function (i, obj) {
+            // task dobj is created this place
             var task = $.tmpl(task_tmpl, obj);
             task.data('id', obj.id);
+            task.data('status', obj.status);
+            if (obj.status) {
+                task.addClass('done');
+            } else {
+                task.addClass('undone');
+            }
             task_container.append(task);
             task.delay(i*50).fadeIn(200);
         });
@@ -80,9 +87,10 @@ var HideTaskDetail = function () {
 }
 
 var HideTask = function () {
-    Env.task.fadeOut(500, function () {
+    var task = Env.task;
+    task.fadeOut(500, function () {
         var gap = $('<li>').addClass('task_item').css('list-style-type', 'none !important');
-        Env.task.after(gap);
+        task.after(gap);
         gap.animate({
             height: '0px'
         }, 300, function () {
@@ -98,6 +106,26 @@ var HideTask = function () {
         HideTaskDetail();
     });
 }
+var TaskStatusUpdated = function (st) {
+    var task = Env.task;
+    if (Env.filter.status != 2) {
+        if (st != Env.filter.status) {
+            // just hide
+            HideTask();
+            return
+        }
+    }
+
+    if (st == 1) {
+        task.removeClass('undone').addClass('done');
+        $('.operate .done').hide();
+        $('.operate .undone').show();
+    } else {
+        task.removeClass('done').addClass('undone');
+        $('.operate .undone').hide();
+        $('.operate .done').show();
+    }
+}
 
 var TaskDone = function () {
     var ajax = new_ajax('POST');
@@ -106,7 +134,7 @@ var TaskDone = function () {
         'task_id': Env.task_id
     }
     ajax.send(function (json) {
-        HideTask();
+        TaskStatusUpdated(1);
     });
 }
 var TaskUndone = function () {
@@ -116,25 +144,28 @@ var TaskUndone = function () {
         'task_id': Env.task_id
     }
     ajax.send(function (json) {
-        HideTask();
+        TaskStatusUpdated(0);
     });
 }
 var TaskEdit = function () {
-    $.jqDialog.prompt('oo', 'xx', function () {
-        var ajax = new_ajax('POST');
-        ajax.url = '/tasks/ajax/delete';
-        ajax.data = {
-            'task_id': Env.task_id
+    $.jqDialog.prompt(
+        'Edit Task',
+        Env.task.html(),
+        function (content) {
+            var ajax = new_ajax('POST');
+            ajax.url = '/tasks/ajax/update';
+            ajax.data = {
+                'task_id': Env.task_id,
+                'content': content
+            }
+            ajax.send(function (json) {
+                Env.task.html(json.content);
+            });
         }
-        ajax.send(function (json) {
-            HideTask();
-        });
-    }, function () {
-        alert('canceled');
-    });
+    );
 }
 var TaskDelete = function () {
-    $.jqDialog.confirm('ooxx?',
+    $.jqDialog.confirm('Delete Task ?',
         function () {
             var ajax = new_ajax('POST');
             ajax.url = '/tasks/ajax/delete';
@@ -144,9 +175,6 @@ var TaskDelete = function () {
             ajax.send(function (json) {
                 HideTask();
             });
-        },
-        function () {
-            alert('canceled');
         }
     );
 }

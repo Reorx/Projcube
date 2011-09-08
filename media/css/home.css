@@ -14,7 +14,6 @@
 #main_left ul {
     margin-top: 0; margin-bottom: 0;
     padding-left: 25px;
-    list-style-type: disc !important;
 }
 #main_left li.task_item {
     height: 20px;
@@ -96,6 +95,16 @@
 #main_left li.task_item.focus {
     left: 5px;
     text-shadow: 1px 1px 1px #BCEAF5;
+}
+
+#main_left li.task_item.done {
+    list-style-type: circle !important;
+    text-decoration: line-through;
+    color: #666666;
+}
+#main_left li.task_item.undone {
+    list-style-type: disc !important;
+    color: #303030;
 }
 
 #main_right .operate a {

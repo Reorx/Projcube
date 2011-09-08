@@ -121,7 +121,11 @@ def v_tasks_ajax(req):
         Q0 = ~Q(creator = user)
     else:
         Q0 = Q()
-    Q1 = Q(is_done = opts['status'])
+
+    if 2 == opts['status']:
+        Q1 = Q()
+    else:
+        Q1 = Q(is_done = opts['status'])
 
     qs = proj.tasks.filter(Q0, Q1)
     data = [i.stdout() for i in qs.order_by('-created_time')]
@@ -147,8 +151,12 @@ def v_tasks_ajax_create(req):
     return render_api(task.stdout())
 
 @login_required
+@get_rsrc('proj.Task', 'task_id')
 def v_tasks_ajax_update(req):
-    pass
+    task = req._target
+    task.content = req.POST['content']
+    task.save()
+    return render_api(task.stdout())
 
 @login_required
 @get_rsrc('proj.Task', 'task_id')
