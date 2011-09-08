@@ -27,9 +27,11 @@ urlpatterns += patterns('',
     (r'^tasks/ajax$', views.v_tasks_ajax),
     (r'^tasks/ajax/show$', views.v_tasks_ajax_show),
     (r'^tasks/ajax/create$', views.v_tasks_ajax_create),
+    (r'^tasks/ajax/update$', views.v_tasks_ajax_update),
+    (r'^tasks/ajax/delete$', views.v_tasks_ajax_delete),
     (r'^tasks/ajax/commenton$', views.v_tasks_ajax_commenton),
-    #(r'^tasks/undone$', views.v_tasks_undone),
-    #(r'^tasks/done$', views.v_tasks_done),
+    (r'^tasks/ajax/done$', views.v_tasks_ajax_done),
+    (r'^tasks/ajax/undone$', views.v_tasks_ajax_undone),
 )
 
 urlpatterns += patterns('',

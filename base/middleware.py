@@ -1,4 +1,4 @@
-from projcube.utils.viewsbase import ApiBaseError
+from utils.viewsbase import ApiBaseError
 # NOTE ????
 
 def StoreDebugPage(req, resp):

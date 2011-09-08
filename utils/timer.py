@@ -10,7 +10,6 @@ def datetime_timedelta(dtA, dtB):
         delta = dtB - dtA
         delta = int(delta.total_seconds())
     if delta < 60:
-        print '%s s' % delta
         return '%s s' % delta
     elif delta < 60 * 60:
         return '%s min' % (delta/60)

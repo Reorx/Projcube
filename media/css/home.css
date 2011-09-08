@@ -28,6 +28,16 @@
     height: 450px;
     scroll: vertical;
 }
+#main_right .operate {
+    margin-top: 5px;
+    margin-bottom: 10px;
+}
+#main_right .operate a {
+    display: inline-block;
+    margin-right: 10px;
+    padding: 3px 5px;
+}
+
 #task_info {
     margin-bottom: 30px;
 }
@@ -86,6 +96,31 @@
 #main_left li.task_item.focus {
     left: 5px;
     text-shadow: 1px 1px 1px #BCEAF5;
+}
+
+#main_right .operate a {
+    -webkit-border-radius: 3px;
+    font-size: 10px;
+    font-weight: bold;
+    -webkit-transition: all 0.2s ease-in-out;
+}
+#main_right .operate a.red,
+#main_right .operate a.red:active {
+    color: #B10404;
+    border: 1px solid #B10404;
+}
+#main_right .operate a.red:hover {
+    background: #B10404;
+    color: #fff;
+}
+#main_right .operate a.grey,
+#main_right .operate a.grey:active {
+    color: #555;
+    border: 1px solid #aaa;
+}
+#main_right .operate a.grey:hover {
+    background: #888;
+    color: #fff;
 }
 
 #task_info .box span {

@@ -1,5 +1,6 @@
 /* global variables */
 var Env = {
+    task: null,
     task_id: null,
     proj_id: $.cookie('context_proj_id'),
     filter: {
@@ -17,6 +18,9 @@ var LoadContext = function () {
     });
 }
 var LoadTasks = function () {
+    // hide detail firstly
+    HideTaskDetail();
+
     var params = {
         proj_id: Env.proj_id
     }
@@ -34,10 +38,11 @@ var LoadTasks = function () {
         });
     });
 }
-var ShowTaskDetail = function (id) {
+var ShowTaskDetail = function (task) {
     var ajax = new_ajax('GET');
-    ajax.url = '/tasks/ajax/show?task_id=' + id;
+    ajax.url = '/tasks/ajax/show?task_id=' + task.data('id');
     ajax.send(function (json) {
+        // displays
         $('#task_info').find('.creator').html(json.creator.username);
         $('#task_info').find('.time').html(json.created_time);
         $('#task_comments').empty();
@@ -53,32 +58,147 @@ var ShowTaskDetail = function (id) {
             comment.find('.content').html(obj.content);
             $('#task_comments').append(comment);
         });
+        // events
+        var operate = $('#main_right .operate');
+        operate.children().show();
+        json.status?operate.find('.done').hide():operate.find('.undone').hide();
 
+        // show container
         if (!$('#main_right').is(':visible')) {
             $('#main_right').fadeIn(300);
         }
 
         // after all change Env.task_id
-        Env.task_id = id
+        Env.task_id = task.data('id');
+        Env.task = task;
     });
+}
+var HideTaskDetail = function () {
+    if ($('#main_right').is(':visible')) {
+        $('#main_right').fadeOut(300);
+    }
+}
+
+var HideTask = function () {
+    Env.task.fadeOut(500, function () {
+        var gap = $('<li>').addClass('task_item').css('list-style-type', 'none !important');
+        Env.task.after(gap);
+        gap.animate({
+            height: '0px'
+        }, 300, function () {
+            gap.remove();
+        });
+
+        // vary Env attrs
+        $(this).remove();
+        Env.task = null;
+        Env.task_id = null;
+
+        // hide detail endly
+        HideTaskDetail();
+    });
+}
+
+var TaskDone = function () {
+    var ajax = new_ajax('POST');
+    ajax.url = '/tasks/ajax/done';
+    ajax.data = {
+        'task_id': Env.task_id
+    }
+    ajax.send(function (json) {
+        HideTask();
+    });
+}
+var TaskUndone = function () {
+    var ajax = new_ajax('POST');
+    ajax.url = '/tasks/ajax/undone';
+    ajax.data = {
+        'task_id': Env.task_id
+    }
+    ajax.send(function (json) {
+        HideTask();
+    });
+}
+var TaskEdit = function () {
+    $.jqDialog.prompt('oo', 'xx', function () {
+        var ajax = new_ajax('POST');
+        ajax.url = '/tasks/ajax/delete';
+        ajax.data = {
+            'task_id': Env.task_id
+        }
+        ajax.send(function (json) {
+            HideTask();
+        });
+    }, function () {
+        alert('canceled');
+    });
+}
+var TaskDelete = function () {
+    $.jqDialog.confirm('ooxx?',
+        function () {
+            var ajax = new_ajax('POST');
+            ajax.url = '/tasks/ajax/delete';
+            ajax.data = {
+                'task_id': Env.task_id
+            }
+            ajax.send(function (json) {
+                HideTask();
+            });
+        },
+        function () {
+            alert('canceled');
+        }
+    );
 }
 
 /* on ready */
 $(function () {
     // events
-    $('.task_item').live('click', function () {
+    $('#proj-options .people').find('a').click(function () {
+        Env.filter.people = $(this).attr('data');
+    });
+    $('#proj-options .status').find('a').click(function () {
+        Env.filter.status = $(this).attr('data');
+    });
+    $('#proj-options').find('a').click(function () {
+        if (!$(this).hasClass('active')) {
+            $(this).parent().children().removeClass('active');
+            $(this).addClass('active');
+            LoadTasks();
+        }
+        return false;
+    });
+
+    var task_items = $('.task_item').live('click', function () {
         if ($(this).hasClass('focus')) {
             $(this).removeClass('focus');
-            $('#main_right').fadeOut(300);
+            HideTaskDetail();
         } else {
             $('.task_item').removeClass('focus');
             $(this).addClass('focus');
 
-            ShowTaskDetail($(this).data('id'));
+            ShowTaskDetail($(this));
         }
     });
-
-    $('#task_comment_editor').keydown(function (e) {
+    var task_operates = $('#main_right .operate a').click(function () {
+        var $this = $(this);
+        switch ($this.html()) {
+            case 'done':
+                TaskDone();
+                break
+            case 'undone':
+                TaskUndone();
+                break
+            case 'edit':
+                TaskEdit();
+                break
+            case 'delete':
+                TaskDelete();
+                break
+        }
+        return false;
+    });
+    var task_comment_editor = $('#task_comment_editor').keydown(function (e) {
         var $this = $(this);
         // Ctrl-Enter pressed
         if (e.ctrlKey && e.keyCode == 13) {
@@ -94,21 +214,6 @@ $(function () {
                 ShowTaskDetail(Env.task_id);
             });
         }
-    });
-
-    $('#proj-options .people').find('a').click(function () {
-        Env.filter.people = $(this).attr('data');
-    });
-    $('#proj-options .status').find('a').click(function () {
-        Env.filter.status = $(this).attr('data');
-    });
-    $('#proj-options').find('a').click(function () {
-        if (!$(this).hasClass('active')) {
-            $(this).parent().children().removeClass('active');
-            $(this).addClass('active');
-            LoadTasks();
-        }
-        return false;
     });
 
 

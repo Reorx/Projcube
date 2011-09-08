@@ -42,6 +42,20 @@ class Task(BaseRModel):
     def __unicode__(self):
         return self.content[10:]
 
+    def done(self):
+        # change status
+        self.is_done = 1
+        # change time record
+        # TODO
+        self.save()
+
+    def undone(self):
+        # change status
+        self.is_done = 0
+        # change time record
+        # TODO
+        self.save()
+
     def stdout(self):
         import datetime
         data = super(Task, self).stdout(['content'])

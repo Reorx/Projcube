@@ -147,19 +147,39 @@ def v_tasks_ajax_create(req):
     return render_api(task.stdout())
 
 @login_required
+def v_tasks_ajax_update(req):
+    pass
+
+@login_required
+@get_rsrc('proj.Task', 'task_id')
+def v_tasks_ajax_delete(req):
+    task = req._target
+    task.delete()
+    return render_api({})
+
+@login_required
 @get_rsrc('proj.Task', 'task_id')
 def v_tasks_ajax_commenton(req):
     print req.POST
     _comment_.create_comment(req._target, req.user, req.POST['content'])
     return render_api({'msg': 'OK'})
 
-def v_tasks_undone(req, tpl='.html'):
-    cdic = {}
-    return render_tpl(req, tpl, cdic)
+@login_required
+@get_rsrc('proj.Task', 'task_id')
+def v_tasks_ajax_done(req):
+    task = req._target
+    if task.is_done:
+        raise ApiBaseError(400)
+    task.done()
+    return render_api({})
 
-def v_tasks_done(req, tpl='.html'):
-    cdic = {}
-    return render_tpl(req, tpl, cdic)
+@get_rsrc('proj.Task', 'task_id')
+def v_tasks_ajax_undone(req):
+    task = req._target
+    if not task.is_done:
+        raise ApiBaseError(400)
+    task.undone()
+    return render_api({})
 
 def v_daysums(req, tpl='.html'):
     cdic = {}

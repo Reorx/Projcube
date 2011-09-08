@@ -1,5 +1,9 @@
 @import url(/media/fonts/Josefin-Sans.css); 
 
+body {
+	font-family: Arial;
+}
+
 .sketch {
     border: 0px solid #dadada;
 }
@@ -117,4 +121,26 @@
     position: absolute;
     left: 15px; right: 15px; top: 15px; bottom: 15px;
     background: #fafafa;
+}
+
+#popNoti {
+    position: absolute;
+    top: 20px; right: 20px;
+    line-height: 30px;
+}
+#popNoti span {
+    display: block;
+    height: 25px;
+    margin-bottom: 5px;
+    padding: 0 5px;
+
+    line-height: 25px;
+    text-align: center;
+    background: red;
+    color: #fff;
+
+}
+#popNoti span.gap {
+    width: 100px;
+    background: transparent;
 }

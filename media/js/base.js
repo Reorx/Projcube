@@ -73,27 +73,26 @@
             });
         });
     }
+    /*
+    $.fn.cuberact = function () {
+    }
+    */
 })(jQuery);
 
 /* components */
 var popNoti = function (s) {
-    var notiDOM = $('<div>').css({
-        'display': 'none',
-        'position': 'absolute',
-        'height': '30px', 'line-height': '30px',
-        'text-align': 'center',
-        'top': '20px', 'right': '20px',
-    }).append(
-        $('<span>').html(s).css({
-            'padding': '2px 8px',
-            'background': 'red', 'color': '#fff'
-        })
-    );
-    $('body').append(notiDOM);
-    notiDOM.fadeIn(300, function () {
+    var noti = $('<span>').html(s).appendTo($('#popNoti'));
+    noti.fadeIn(300, function () {
         setTimeout(function () {
-            notiDOM.fadeOut(300, function () {
-                notiDOM.remove();
+            noti.fadeOut(300, function () {
+                var gap = $('<span>').addClass('gap');
+                noti.after(gap);
+                gap.animate({
+                    height: '0px'
+                }, 300, function () {
+                    gap.remove();
+                    noti.remove();
+                });
             })
         }, 500);
     });
@@ -118,7 +117,10 @@ var new_ajax = function (method) {
             },
             */
             data: ajaxObj.data,
-            success: succFn
+            success: succFn,
+            complete: function (jqXHR, msg) {
+                popNoti('ajax: ' + jqXHR.status + ' ' + msg);
+            }
         });
     };
     return ajaxObj;
