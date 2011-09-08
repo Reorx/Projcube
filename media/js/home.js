@@ -239,7 +239,7 @@ $(function () {
             ajax.send(function (json) {
                 $this.val('').blur();
                 popNoti(json.msg);
-                ShowTaskDetail(Env.task_id);
+                ShowTaskDetail(Env.task);
             });
         }
     });
