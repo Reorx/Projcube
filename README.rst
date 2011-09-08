@@ -6,6 +6,8 @@ Task
     * edit, delete & done, undone
     * filter: time
     * extend filter people, choose certain member
+    * list show:
+        + timeline: Today, Yesterday, More Early ...
 
 Proj
     * list manage: update, delete
