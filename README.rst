@@ -34,3 +34,4 @@ UI
     * context name hold width
     * task hold width, linebreak
     * task comment hold width, linebreak
+    * menu keep open/close

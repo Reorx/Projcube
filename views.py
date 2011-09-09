@@ -47,6 +47,15 @@ def v_context(req, tpl='context.html'):
         }
         return render_tpl(req, tpl, cdic)
 
+def v_user(req):
+    pass
+
+def v_user_projs(req):
+    pass
+
+def v_user_tasks(req):
+    pass
+
 def v_projs(req, tpl='projs.html'):
     user = req.user
     cdic = {
@@ -55,7 +64,7 @@ def v_projs(req, tpl='projs.html'):
     }
     return render_tpl(req, tpl, cdic)
 
-def v_projs_create(req, tpl='proj_create.html'):
+def v_projs_create(req, tpl='projs_create.html'):
     cdic = {}
     if 'POST' == req.method:
         form = forms.ProjForm(user=req.user, data=req.POST)
@@ -67,12 +76,24 @@ def v_projs_create(req, tpl='proj_create.html'):
         cdic['form'] = forms.ProjForm()
         return render_tpl(req, tpl, cdic)
 
+def v_projs_join(req, tpl='projs_join.html'):
+    if 'POST' == req.method:
+        try:
+            proj = Proj.objects.get(name = req.POST['name'])
+        except:
+            raise ApiBaseError(400)
+        pass
+    else:
+        cdic = {}
+        cdic['projs'] = Proj.objects.all()
+        return render_tpl(req, tpl, cdic)
+
 def v_projs_switch(req, tpl='.html'):
     cdic = {}
     return render_tpl(req, tpl, cdic)
 
 @login_required
-def v_projs_members(req, id, tpl='proj_members.html'):
+def v_projs_members(req, id, tpl='projs_members.html'):
     cdic = {}
     p = Proj.by_id(id)
     if not p:

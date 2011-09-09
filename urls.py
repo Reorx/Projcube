@@ -13,9 +13,15 @@ urlpatterns = patterns('',
 )
 
 urlpatterns += patterns('',
+    (r'^user$', views.v_user),
+    (r'^user/projs$', views.v_user_projs),
+    (r'^user/tasks$', views.v_user_tasks),
+)
+
+urlpatterns += patterns('',
     (r'^projs$', views.v_projs),
     (r'^projs/create$', views.v_projs_create),
-    (r'^projs/(?P<id>\d+)/switch$', views.v_projs_switch),
+    (r'^projs/join$', views.v_projs_join),
     (r'^projs/(?P<id>\d+)/members$', views.v_projs_members),
     #(r'^projs/(?P<c>\w+)/settings$', views.v_projs_settings),
     (r'^projs/ajax$', views.v_projs_ajax),
