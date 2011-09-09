@@ -40,7 +40,7 @@ class Task(BaseRModel):
     is_done = IntegerField(default=0)
 
     def __unicode__(self):
-        return self.content[10:]
+        return self.proj.name + ': ' + self.content[:10]
 
     def done(self):
         # change status

@@ -45,3 +45,11 @@ urlpatterns += patterns('',
     #(r'^messages/sent$', views.v_messages_sent),
     #(r'^messages/received$', views.v_messages_received),
 )
+
+from django.contrib import admin
+#admin.autodiscover()
+from projcube import admin as models_admin
+models_admin.autoregister()
+urlpatterns += patterns('',
+    (r'^admin/',include(admin.site.urls)),
+)
