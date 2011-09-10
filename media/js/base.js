@@ -219,7 +219,8 @@ $(function () {
         },
         keydown: function (e) {
             // Ctrl-Enter pressed
-            if (e.ctrlKey && e.keyCode == 13) {
+            //if (e.ctrlKey && e.keyCode == 13) {
+            if (e.keyCode == 13) {
                 SendTask();
             }
         }

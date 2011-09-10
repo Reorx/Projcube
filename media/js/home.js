@@ -230,6 +230,7 @@ $(function () {
         var $this = $(this);
         // Ctrl-Enter pressed
         if (e.ctrlKey && e.keyCode == 13) {
+        //if (e.keyCode == 13) {
             var ajax = new_ajax('POST');
             ajax.url = '/tasks/ajax/commenton';
             ajax.data = {
