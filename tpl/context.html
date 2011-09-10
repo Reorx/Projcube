@@ -17,27 +17,22 @@ Proj
 {% block main_left %}
 
 <div class="box">
-    <div class="title">Change Context</div>
+    <div class="title">选择工作环境</div>
+    <div class="container">
     {% for i in in_projs %}
-        <a class="button" value="{{ i.id }}">{{ i.name }}</a>
+        <a class="button item" value="{{ i.id }}">{{ i.name }}</a>
     {% endfor %}
-</div>
-
-<div class="box">
-    <div class="title">OR</div>
-    <a href="/projs/create" class="button">
-        Create A Proj
-    </a>
-    <div class="clearfix"></div>
-
-    <a href="/projs/join" class="button">
-        Join A Proj
-    </a>
-    <div class="clearfix"></div>
+    </div>
 </div>
 
 {% endblock %}
 
 {% block main_right %}
+<div class="sglink">
+    <a href="/projs/join" class="left">
+        管理项目
+    </a>
+    <div class="right"></div>
+</div>
 {% endblock %}
 

@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+
+{% load my_filters %}
+
+{% block head_title %}
+Proj
+{% endblock %}
+
+{% block head_extra %}
+    <link media="all" rel="stylesheet" href="/media/css/projs_show.css" type="text/css" />
+{% endblock %}
+
+{% block main_top_extra %}
+{% endblock %}
+
+{% block main_left %}
+<div class="box">
+    <div class="creator">
+        <div class="title">创建者</div>
+        <div class="content">
+            {{ proj.creator.username }}
+        </div>
+    </div>
+    <div class="name">
+        <div class="title">名称</div>
+        <div class="content">
+            {{ proj.name }}
+        </div>
+    </div>
+    <div class="description">
+        <div class="title">描述</div>
+        <div class="content">
+            {{ proj.description }}
+        </div>
+    </div>
+    <div class="members">
+        <div class="title">成员</div>
+        <div class="content">
+            {% for i in proj.members.all %}
+                <div class="member">
+                    {{ i.username }}
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block main_right %}
+<div class="sglink">
+    <a href="/projs/{{ proj.id }}/update" class="left">
+        更新项目
+    </a>
+    <div class="right"></div>
+</div>
+<div class="sglink">
+    <a href="/projs/{{ proj.id }}/delete" class="left">
+        删除项目
+    </a>
+    <div class="right"></div>
+</div>
+{% endblock %}
+

@@ -1,10 +1,8 @@
-#main_left .clearfix {
+.clearfix {
     height: 20px;
 }
 
-#main_left .box {
-    margin-bottom: 20px;
-}
-#main_left .box .title {
+.box .container .item {
+    margin-right: 20px;
     margin-bottom: 10px;
 }

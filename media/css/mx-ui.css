@@ -146,6 +146,42 @@ pre { }
     -webkit-border-radius: 1ex;
 }
 
+/* shape */
+
+.sglink {
+    display: block;
+    padding: 5px 5px;
+    overflow: hidden;
+}
+.sglink .left, .sglink .right {
+    display: block;
+    float: left;
+}
+.sglink .left {
+    height: 30px;
+    line-height: 30px;
+    padding: 0 5px 0 10px;
+    color: #fefefe;
+    background: #111;
+    letter-spacing: 2px;
+    font-size: 13px;
+    font-weight: bold;
+    text-shadow: 1px 1px 1px #555;
+    -webkit-box-shadow: -3px 0px 2px #888;
+    -webkit-border-radius: 3px 0 0 3px;
+    -webkit-transition: all 0.3 ease;
+    cursor: pointer;
+}
+.sglink .left:hover {
+}
+.sglink .right {
+	width: 0; height: 0;
+	border-top: 15px solid transparent;
+	border-left: 18px solid #111;
+	border-bottom: 15px solid transparent;
+}
+		
+
 /* funtional */
 .clearfix {
     clear: both;

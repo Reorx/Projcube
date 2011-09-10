@@ -15,41 +15,51 @@ Proj
 {% endblock %}
 
 {% block main_left %}
-    <div class="box">
-        <div class="title">In Projs</div>
+    <div class="proj box">
+        <div class="title">参与的项目</div>
+        <div class="container">
         {% for i in in_projs %}
-            <ul class="item">
-                <li>
-                    <a href="#"> {{ i.name}} </a>
-                </li>
-            </ul>
+            <a href="/projs/{{ i.id }}" class="item">
+                <span>{{ i.name}}</span>
+            </a>
         {% endfor %}
+        </div>
     </div>
 
-    <div class="box">
-        <div class="title">Own Projs</div>
+    <div class="proj box">
+        <div class="title">创建的项目</div>
+        <div class="container">
         {% for i in own_projs %}
-            <ul class="item">
-                <li>
-                    <a href="#"> {{ i.name}} </a>
-                </li>
-            </ul>
+            <a href="/projs/{{ i.id }}" class="item">
+                <span>{{ i.name}}</span>
+            </a>
         {% endfor %}
+        </div>
     </div>
 
-    <div class="box">
-        <div class="title">Pending Proj</div>
+    <div class="proj box">
+        <div class="title">等待加入的项目</div>
+        <div class="container">
         {% for i in pending_projs %}
-            <ul class="item">
-                <li>
-                    <a href="#"> {{ i.name}} </a>
-                </li>
-            </ul>
+            <a href="#" class="item"> {{ i.name}} </a>
         {% endfor %}
+        </div>
     </div>
 
 {% endblock %}
 
 {% block main_right %}
+<div class="sglink">
+    <a href="/projs/create" class="left">
+        创建项目
+    </a>
+    <div class="right"></div>
+</div>
+<div class="sglink">
+    <a href="/projs/join" class="left">
+        加入项目
+    </a>
+    <div class="right"></div>
+</div>
 {% endblock %}
 

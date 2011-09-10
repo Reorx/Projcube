@@ -1,37 +1,25 @@
-.proj.box {
-}
 .proj.box .container .item {
-    height: 25px;
-    line-height: 25px;
-    margin-bottom: 5px;
+    display: inline-block;
+    padding: 5px 10px;
+    margin-right: 20px;
+    margin-bottom: 10px;
+    border: 1px solid transparent;
+    -webkit-border-radius: 3px;
+    background-color: rgba(215, 215, 215, 0.3);
+    -webkit-box-shadow: 0 0 2px #fff inset;
+    color: #444;
+    font-weight: bold;
+    text-shadow: 1px 1px 1px #fff;
+    font-family: "Helvetica Neue", Helvetica, Arial;
+    font-size: 12px;
     /*
     background-image: url('/media/img/bg_proj.svg');
     background-repeat: no-repeat;
     background-size: auto 25px;
     */
-
-}
-.proj.box .container .item * {
-    display: block;
-    float: left;
-    height: 25px;
-}
-.proj.box .container .item img {
-    width: 13px;
-
     -webkit-transition: all 0.3s ease;
-    -webkit-transform: rotate(30deg);
-}
-.proj.box .container .item span {
-    cursor: pointer;
-    padding: 0 8px;
-    margin-left: 10px;
 
-    color: #333;
-    border: 1px solid transparent;
-    -webkit-border-radius: 3px;
-    -webkit-transition: all 0.3s ease;
 }
-.proj.box .container .item span:hover {
-    border-color: #333;
+.proj.box .container .item:hover {
+    border-color: #aaa;
 }

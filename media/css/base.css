@@ -2,6 +2,10 @@
 
 body {
 	font-family: Arial;
+    /*
+    background: url(/media/img/project_papper.png);
+    background: #F7F6E2;
+    */
 }
 
 .sketch {
@@ -13,16 +17,14 @@ body {
 }
 .box .title {
     color: #555;
-    font-size: 22px;
+    font-size: 20px;
     font-weight: bold;
     letter-spacing: 1px;
 }
 .box .container {
     margin-top: 10px;
-    margin-left: 20px;
 }
 .box .container .item {
-    display: block;
 }
 
 #main {

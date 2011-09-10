@@ -1,0 +1,36 @@
+
+.proj.box .container .item {
+    height: 25px;
+    line-height: 25px;
+    margin-bottom: 5px;
+    /*
+    background-image: url('/media/img/bg_proj.svg');
+    background-repeat: no-repeat;
+    background-size: auto 25px;
+    */
+
+}
+.proj.box .container .item * {
+    display: block;
+    float: left;
+    height: 25px;
+}
+.proj.box .container .item img {
+    width: 13px;
+
+    -webkit-transition: all 0.3s ease;
+    -webkit-transform: rotate(30deg);
+}
+.proj.box .container .item span {
+    cursor: pointer;
+    padding: 0 8px;
+    margin-left: 10px;
+
+    color: #333;
+    border: 1px solid transparent;
+    -webkit-border-radius: 3px;
+    -webkit-transition: all 0.3s ease;
+}
+.proj.box .container .item span:hover {
+    border-color: #333;
+}

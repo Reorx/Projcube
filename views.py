@@ -1,4 +1,4 @@
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
@@ -21,6 +21,9 @@ def change_context(resp, context):
 
 @login_required
 def v_home(req, tpl='home.html'):
+    """
+
+    """
     user = req.user
 
     context_id = req.COOKIES.get('context_proj_id')
@@ -88,18 +91,28 @@ def v_projs_join(req, tpl='projs_join.html'):
         cdic['projs'] = Proj.objects.all()
         return render_tpl(req, tpl, cdic)
 
-def v_projs_switch(req, tpl='.html'):
-    cdic = {}
+def v_projs_show(req, tpl='projs_show.html', id=None):
+    try:
+        proj = Proj.objects.get(id=id)
+    except:
+        raise Http404
+    cdic = {
+        'proj': proj
+    }
     return render_tpl(req, tpl, cdic)
 
 @login_required
-def v_projs_members(req, id, tpl='projs_members.html'):
+def v_projs_update(req, id, tpl='projs_members.html'):
     cdic = {}
     p = Proj.by_id(id)
     if not p:
         return ApiBaseError(404)
     cdic['members'] = p.members.all()
     return render_tpl(req, tpl, cdic)
+
+@login_required
+def v_projs_delete(req, id, tpl='projs_members.html'):
+    pass
 
 def v_projs_settings(req, tpl='.html'):
     cdic = {}
